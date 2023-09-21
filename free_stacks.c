@@ -1,21 +1,41 @@
+#include "monty.h"
+
 /**
- * op_pall - print stack's elements
+ * free_stack - frees a stack
  *
- * @line_number: will not be used , we usse attribute not void
- * @stack: pointer to the head of the doubly linked list
+ * @stack: the stack
  *
  * Return: void
-*/
-
-void op_pall(stack_t **stack, unsigned int __attribute__((unused)) line_number)
+**/
+void free_stack(stack_t *stack)
 {
-	stack_t *current = *stack;
+	stack_t *next;
 
-	if (stack == NULL || *stack == NULL)
-		return;
-	while (current != NULL)
+	while (stack != NULL)
 	{
-		printf("%d\n", current->n);
-		current = current->next;
+		next = stack->next;
+		free(stack);
+		stack = next;
 	}
+}
+
+/**
+* len - length of stack
+*
+* @stack: pointer that point to stack
+*
+* Return: unsigned int
+**/
+unsigned int len(stack_t **stack)
+{
+	stack_t *current;
+	unsigned int l = 0;
+
+	current = *stack;
+	while (current)
+	{
+		current = current->next;
+		l++;
+	}
+	return (l);
 }

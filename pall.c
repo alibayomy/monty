@@ -1,3 +1,4 @@
+#include "monty.h"
 /**
  * op_pall - print stack's elements
  *
