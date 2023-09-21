@@ -1,38 +1,47 @@
 #include "monty.h"
+#include <stdio.h>
+input_t input = {NULL, NULL, NULL, 0};
 /**
- * main - creat an interpreter for Monty ByteCode files
- * @argc: number of arguments passed to the program
- * @argv: array of strings of the given arguments to the program
- * Return: 0 on sucess, FALIURE_STATUS on faliure
+* main - monty code interpreter
+* @argc: number of arguments passed to the program
+* @argv: array of arguments passed
+* Return: 0 on success
 */
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
-	FILE *fptr;
-	char input[1204];
-	int line_number = 0, status;
+	char *content;
+	FILE *file;
+	size_t size = 0;
+	ssize_t line_n = 1;
 	stack_t *stack = NULL;
+	unsigned int counter = 0;
 
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	fptr = fopen(argv[1], "r");
-	if (fptr == NULL)
+	file = fopen(argv[1], "r");
+	input.file = file;
+	if (!file)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
-	while (fgets(input, 1204, fptr) != NULL)
+	while (line_n > 0)
 	{
-		line_number++;
-		status = instruction_prc(input, &stack);
-		if (status == 1)
+		content = NULL;
+		line_n = getline(&content, &size, file);
+		input.content = content;
+		counter++;
+		if (line_n > 0)
 		{
-			fprintf(stderr, "L%d unknown instruction %s\n", line_number, input);
+			execute(content, &stack, counter, file);
 		}
+		free(content);
 	}
-	fclose(fptr);
-	return (0);
+	free_stack(stack);
+	fclose(file);
+return (0);
 }
 

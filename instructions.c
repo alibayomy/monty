@@ -1,36 +1,43 @@
 #include "monty.h"
 /**
- * instruction_prc - implement the instruction given in the file
- * @buffer: the given instruction
- * @stack: the given stack to work on
- * Return: 0 on success, else 1
+* execute - executes the opcode
+* @stack: head linked list - stack
+* @counter: line_counter
+* @file: poiner to monty file
+* @content: line content
+* Return: no return
 */
-int instruction_prc(char buffer[], stack_t **stack)
+int execute(char *content, stack_t **stack, unsigned int counter, FILE *file)
 {
-	instruction_t code_lst[] = {{"push", push}, {"pall", pall},
-				{NULL, NULL}};
-	char *token;
-	int x;
+	instruction_t opst[] = {
+				{"push", f_push}, {"pall", f_pall}, {"pint", f_pint},
+				{"pop", f_pop},
+				{"swap", f_swap},
+				{"add", f_add},
+				{"nop", f_nop},
+				{NULL, NULL}
+				};
+	unsigned int i = 0;
+	char *op;
 
-	token = strtok(buffer, " ");
-	for (x = 0; code_lst[x].opcode != NULL; x++)
+	op = strtok(content, " \n\t");
+	if (op && op[0] == '#')
+		return (0);
+	input.arg = strtok(NULL, " \n\t");
+	while (opst[i].opcode && op)
 	{
-		if (strcmp(token, code_lst[x].opcode) == 0)
-		{
-			if (strcmp(token, "push") == 0)
-			{
-				token = strtok(NULL, " \n");
-				code_lst[x].f(stack, atoi(token));
-				return (0);
-			}
-			else
-			{
-				code_lst[x].f(stack, 0);
-				return (0);
-			}
+		if (strcmp(op, opst[i].opcode) == 0)
+		{	opst[i].f(stack, counter);
+			return (0);
 		}
+		i++;
 	}
+	if (op && opst[i].opcode == NULL)
+	{ fprintf(stderr, "L%d: unknown instruction %s\n", counter, op);
+		fclose(file);
+		free(content);
+		free_stack(*stack);
+		exit(EXIT_FAILURE); }
 	return (1);
-
 }
 
