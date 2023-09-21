@@ -1,24 +1,29 @@
-#include "monty.h"
 /**
- * f_pop - prints the top
- * @head: stack head
- * @counter: line_number of the given instruction
- * Return: no return
-*/
-void f_pop(stack_t **head, unsigned int counter)
+ * op_pop - removes the last inserted element
+ *
+ * @line_number: number of lines  in the file
+ * @stack: pointer to the pointer to the head
+ *
+ * Return: void
+ */
+void op_pop(stack_t **stack, unsigned int line_number)
 {
-	stack_t *h;
+	stack_t *to_the_end;
 
-	if (*head == NULL)
+	if (stack == NULL)
 	{
-		fprintf(stderr, "L%d: can't pop an empty stack\n", counter);
-		fclose(input.file);
-		free(input.content);
-		free_stack(*head);
+		printf("L%u: can't pop an empty stack\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	h = *head;
-	*head = h->next;
-	free(h);
+	else if (*stack == NULL)
+	{
+		printf("L%u: can't pop an empty stack\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		to_the_end = *stack;
+		*stack = (*stack)->next;
+		free(to_the_end);
+	}
 }
-
