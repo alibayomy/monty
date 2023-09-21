@@ -1,1 +1,1 @@
- This is my solution for LIFO AND FIFO
+this is my readme file 

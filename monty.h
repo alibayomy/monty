@@ -55,5 +55,5 @@ void op_pall(stack_t **stack, unsigned int line_number);
 void op_pint(stack_t **stack, unsigned int line_number);
 int find_opcode(stack_t **stack, char *opcode, int line_number);
 void op_swap(stack_t **stack, unsigned int line_number);
-
+size_t lol(stack_t *h);
 #endif
