@@ -8,7 +8,7 @@
 int instruction_prc(char buffer[], stack_t **stack)
 {
 	instruction_t code_lst[] = {{"push", push}, {"pall", pall},
-								{"pint", pint}, {NULL, NULL}};
+				, {NULL, NULL}};
 	char *token;
 	int x;
 
