@@ -58,4 +58,5 @@ void op_swap(stack_t **stack, unsigned int line_number);
 size_t lol(stack_t *h);
 void add(stack_t **stack, unsigned int line_number);
 void sub(stack_t **stack, unsigned int line_number);
+void divv(stack_t **stack, unsigned int line_number);
 #endif
