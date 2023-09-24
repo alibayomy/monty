@@ -16,7 +16,7 @@ int find_opcode(stack_t **stack, char *opcode, int line_number)
 		{"pall", op_pall},
 		{"pop", op_pop},
 		{"swap", op_swap},
-		{"pint", op_pint},
+		{"pint", op_pint}, {"mul", mul},
 		{"add", add},{"sub", sub},
 		{"div", divv}, {NULL, NULL}
 	};
